@@ -2,6 +2,7 @@ package com.chinda.tinyspring.beans.xml;
 
 import com.chinda.tinyspring.beans.AbstractBeanDefinitionReader;
 import com.chinda.tinyspring.beans.BeanDefinition;
+import com.chinda.tinyspring.beans.BeanReference;
 import com.chinda.tinyspring.beans.PropertyValue;
 import com.chinda.tinyspring.beans.io.ResourceLoader;
 import lombok.SneakyThrows;
@@ -75,7 +76,18 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 Element propertyEle = (Element) node;
                 String name = propertyEle.getAttribute("name");
                 String value = propertyEle.getAttribute("value");
-                beanDefinition.getPropertyValues().addPropertyValue(new PropertyValue(name, value));
+                if (null != value && value.length() > 0) {
+                    beanDefinition.getPropertyValues().addPropertyValue(new PropertyValue(name, value));
+                } else {
+                    String ref = propertyEle.getAttribute("ref");
+                    if (null == ref || ref.length() == 0) {
+                        throw new IllegalArgumentException("Configutation problem: <property> element for property '"
+                                + name + "' must specify a ref or value");
+                    } else {
+                        BeanReference beanReference = new BeanReference(ref);
+                        beanDefinition.getPropertyValues().addPropertyValue(new PropertyValue(name, beanReference));
+                    }
+                }
             }
         }
     }

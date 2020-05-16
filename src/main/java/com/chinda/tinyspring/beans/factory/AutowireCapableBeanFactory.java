@@ -1,6 +1,7 @@
 package com.chinda.tinyspring.beans.factory;
 
 import com.chinda.tinyspring.beans.BeanDefinition;
+import com.chinda.tinyspring.beans.BeanReference;
 import com.chinda.tinyspring.beans.PropertyValue;
 import lombok.SneakyThrows;
 
@@ -17,6 +18,7 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
     @Override
     protected Object doCreateBean(BeanDefinition beanDefinition) {
         Object bean = createBeanInstance(beanDefinition);
+        beanDefinition.setBean(bean);
         // 填充属性
         applyPropertyValue(bean, beanDefinition);
         return bean;
@@ -31,7 +33,12 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
         for (PropertyValue propertyValue: beanDefinition.getPropertyValues().getPropertyValueList()) {
             Field declaredField = bean.getClass().getDeclaredField(propertyValue.getName());
             declaredField.setAccessible(true);
-            declaredField.set(bean, propertyValue.getValue());
+            Object value = propertyValue.getValue();
+            if (value instanceof BeanReference) {
+                BeanReference beanReference = (BeanReference) value;
+                value = getBean(beanReference.getName());
+            }
+            declaredField.set(bean, value);
         }
     }
 }

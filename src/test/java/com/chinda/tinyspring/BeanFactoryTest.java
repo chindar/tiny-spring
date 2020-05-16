@@ -18,7 +18,7 @@ import java.util.Map;
 public class BeanFactoryTest {
 
     @Test
-    public void test() {
+    public void testLazy() {
 
         // 1. 读取配置
         XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
@@ -33,6 +33,29 @@ public class BeanFactoryTest {
         }
 
         // 4. 获取Bean
+        HelloWorldService helloWorldService = (HelloWorldService) beanFactory.getBean("helloWorldService");
+        helloWorldService.helloWorld();
+    }
+
+    @Test
+    public void testPreInstantiate() {
+
+        // 1. 读取配置
+        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new ResourceLoader());
+        xmlBeanDefinitionReader.loadBeanDefinitions("tinyioc.xml");
+
+        // 2. 初始化beanFactory
+        BeanFactory beanFactory = new AutowireCapableBeanFactory();
+
+        // 3. 注入Bean
+        for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : xmlBeanDefinitionReader.getRegistry().entrySet()) {
+            beanFactory.registerBeanDefinition(beanDefinitionEntry.getKey(), beanDefinitionEntry.getValue());
+        }
+
+        // 4. 预初始化Bean
+        beanFactory.preInstantiateSingletons();
+
+        // 5. 获取Bean
         HelloWorldService helloWorldService = (HelloWorldService) beanFactory.getBean("helloWorldService");
         helloWorldService.helloWorld();
     }

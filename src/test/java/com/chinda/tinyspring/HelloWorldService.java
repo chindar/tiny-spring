@@ -11,7 +11,8 @@ import lombok.Data;
 @Data
 public class HelloWorldService {
     private String text;
+    private OutputService outputService;
     public void helloWorld() {
-        System.out.println(text);
+        outputService.output(text);
     }
 }

@@ -10,6 +10,11 @@
 
     <bean name="helloWorldService" class="com.chinda.tinyspring.HelloWorldService">
         <property name="text" value="Hello World!"></property>
+        <property name="outputService" ref="outputService"></property>
+    </bean>
+
+    <bean name="outputService" class="com.chinda.tinyspring.OutputService">
+        <property name="helloWorldService" ref="helloWorldService"></property>
     </bean>
 
 </beans>

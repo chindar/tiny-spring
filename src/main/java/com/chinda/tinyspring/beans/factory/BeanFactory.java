@@ -23,4 +23,9 @@ public interface BeanFactory {
      * @param beanDefinition
      */
     void registerBeanDefinition(String name, BeanDefinition beanDefinition);
+
+    /**
+     * 预初始化Bean
+     */
+    void preInstantiateSingletons();
 }
