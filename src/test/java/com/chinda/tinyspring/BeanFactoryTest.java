@@ -1,7 +1,8 @@
 package com.chinda.tinyspring;
 
 import com.chinda.tinyspring.beans.BeanDefinition;
-import com.chinda.tinyspring.beans.BeanFactory;
+import com.chinda.tinyspring.beans.factory.AutowireCapableBeanFactory;
+import com.chinda.tinyspring.beans.factory.BeanFactory;
 import org.junit.Test;
 
 /**
@@ -16,11 +17,13 @@ public class BeanFactoryTest {
     public void test() {
 
         // 1. 初始化beanFactory
-        BeanFactory beanFactory = new BeanFactory();
+        BeanFactory beanFactory = new AutowireCapableBeanFactory();
 
         // 2. 注入Bean
-        beanFactory.registerBeanDefinition("helloWorldService", new BeanDefinition(new HelloWorldService()));
-        
+        BeanDefinition beanDefinition = new BeanDefinition();
+        beanDefinition.setBeanClassName("com.chinda.tinyspring.HelloWorldService");
+        beanFactory.registerBeanDefinition("helloWorldService", beanDefinition);
+
         // 3. 获取Bean
         HelloWorldService helloWorldService = (HelloWorldService) beanFactory.getBean("helloWorldService");
         helloWorldService.helloWorld();
