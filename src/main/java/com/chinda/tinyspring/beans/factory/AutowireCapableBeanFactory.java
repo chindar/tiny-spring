@@ -1,7 +1,10 @@
 package com.chinda.tinyspring.beans.factory;
 
 import com.chinda.tinyspring.beans.BeanDefinition;
+import com.chinda.tinyspring.beans.PropertyValue;
 import lombok.SneakyThrows;
+
+import java.lang.reflect.Field;
 
 /**
  * @author Wang Chinda
@@ -13,6 +16,22 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
     @SneakyThrows
     @Override
     protected Object doCreateBean(BeanDefinition beanDefinition) {
+        Object bean = createBeanInstance(beanDefinition);
+        // 填充属性
+        applyPropertyValue(bean, beanDefinition);
+        return bean;
+    }
+
+    private Object createBeanInstance(BeanDefinition beanDefinition) throws InstantiationException, IllegalAccessException {
         return beanDefinition.getBeanClass().newInstance();
+    }
+
+    @SneakyThrows
+    private void applyPropertyValue(Object bean, BeanDefinition beanDefinition) {
+        for (PropertyValue propertyValue: beanDefinition.getPropertyValues().getPropertyValueList()) {
+            Field declaredField = bean.getClass().getDeclaredField(propertyValue.getName());
+            declaredField.setAccessible(true);
+            declaredField.set(bean, propertyValue.getValue());
+        }
     }
 }

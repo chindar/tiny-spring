@@ -18,6 +18,7 @@ public class BeanDefinition {
     private Object bean;
     private Class<? extends Object> beanClass;
     private String beanClassName;
+    private PropertyValues propertyValues;
 
     @SneakyThrows
     public void setBeanClassName(String beanClassName) {
