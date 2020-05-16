@@ -1,7 +1,5 @@
-package com.chinda.tinyspring.io;
+package com.chinda.tinyspring.beans.io;
 
-import com.chinda.tinyspring.beans.io.Resource;
-import com.chinda.tinyspring.beans.io.ResourceLoader;
 import org.junit.Assert;
 import org.junit.Test;
 

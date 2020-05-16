@@ -1,8 +1,7 @@
-package com.chinda.tinyspring.xml;
+package com.chinda.tinyspring.beans.xml;
 
 import com.chinda.tinyspring.beans.BeanDefinition;
 import com.chinda.tinyspring.beans.io.ResourceLoader;
-import com.chinda.tinyspring.beans.xml.XmlBeanDefinitionReader;
 import org.junit.Assert;
 import org.junit.Test;
 

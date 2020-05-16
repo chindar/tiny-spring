@@ -1,5 +1,6 @@
-package com.chinda.tinyspring;
+package com.chinda.tinyspring.beans;
 
+import com.chinda.tinyspring.HelloWorldService;
 import com.chinda.tinyspring.beans.BeanDefinition;
 import com.chinda.tinyspring.beans.factory.AutowireCapableBeanFactory;
 import com.chinda.tinyspring.beans.factory.BeanFactory;
