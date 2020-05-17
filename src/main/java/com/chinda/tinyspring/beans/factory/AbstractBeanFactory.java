@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractBeanFactory implements BeanFactory {
     private Map<String, BeanDefinition> registry            = new ConcurrentHashMap<>();
-    private List<String>                beanDefinitionNames = new ArrayList<String>();
+    private List<String>                beanDefinitionNames = new ArrayList<>();
 
     @Override
     public Object getBean(String name) {

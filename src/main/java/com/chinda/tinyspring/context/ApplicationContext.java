@@ -7,5 +7,10 @@ package com.chinda.tinyspring.context;
  * @since 1.0
  */
 public interface ApplicationContext {
+    /**
+     * 获取Bean
+     * @param name
+     * @return
+     */
     Object getBean(String name);
 }

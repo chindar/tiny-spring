@@ -13,6 +13,9 @@ import lombok.AllArgsConstructor;
 public abstract class AbstractApplicationContext implements ApplicationContext {
     protected AbstractBeanFactory beanFactory;
 
+    /**
+     * 读取配置, 装载Bean
+     */
     public abstract void refresh();
 
     @Override
